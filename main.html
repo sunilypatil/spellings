@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spelling Quiz Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      color: #4CAF50;
+    }
+    #game-container {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 600px;
+    }
+    input {
+      padding: 10px;
+      margin-top: 20px;
+      font-size: 16px;
+      width: 80%;
+      max-width: 300px;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #feedback {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Spelling Quiz Game</h1>
+  <div id="game-container">
+    <p id="clue">Clue will appear here...</p>
+    <input type="text" id="userInput" placeholder="Enter the word" />
+    <br>
+    <button onclick="checkAnswer()">Submit</button>
+    <div id="feedback"></div>
+    <p>Score: <span id="score">0</span></p>
+  </div>
+
+  <script>
+    const words = [
+      "ageless", "hopeless", "powerless", "lifeless", "seedless", "speechless",
+      "shameless", "colourless", "endless", "homeless",
+      "determine", "visitor", "sequence", "monitor", "constant", "laughter",
+      "tidiness", "laziness", "loneliness", "emptiness", "careful", "forgetful",
+      "painful", "happiness", "boastful", "pitiful", "playful"
+    ];
+
+    let currentWord = "";
+    let score = 0;
+
+    function getRandomWord() {
+      return words[Math.floor(Math.random() * words.length)];
+    }
+
+    function displayClue() {
+      currentWord = getRandomWord();
+      const clue = currentWord.split("").map((char, index) => (index % 2 === 0 ? char : "_" )).join(" ");
+      document.getElementById("clue").innerText = `Guess the word: ${clue}`;
+      document.getElementById("userInput").value = "";
+      document.getElementById("feedback").innerText = "";
+    }
+
+    function checkAnswer() {
+      const userAnswer = document.getElementById("userInput").value.trim().toLowerCase();
+      if (userAnswer === currentWord) {
+        score++;
+        document.getElementById("feedback").innerText = "Correct! Well done! ✅";
+      } else {
+        document.getElementById("feedback").innerText = `Wrong! The correct word was: ${currentWord}`;
+      }
+      document.getElementById("score").innerText = score;
+      setTimeout(displayClue, 2000);
+    }
+
+    window.onload = displayClue;
+  </script>
+</body>
+</html>
